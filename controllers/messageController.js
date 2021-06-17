@@ -33,4 +33,15 @@ function updateMessage({ id, message }) {
   });
 }
 
-export default { addMessage, getMessages, updateMessage };
+function deleteMessage({ id }) {
+  return new Promise(async (resolve, reject) => {
+    if (!id) {
+      return reject("ID empthy in deleteMessage");
+    }
+    const deleteMessage = await messageData.delete({ id });
+    if (deleteMessage === null) return reject("Message does not exit");
+    return resolve(deleteMessage);
+  });
+}
+
+export default { addMessage, getMessages, updateMessage, deleteMessage };

@@ -2,12 +2,17 @@ import express from "express";
 import { router } from "./connection/routers.js";
 import conectedBD from "./config/db.js";
 import chalk from "chalk";
-/* Puerto */
-const PORT = 3000;
+import dotenv from "dotenv";
+
+//path de las variables de entorno
+dotenv.config({ path: "variables.env" });
+const { USERNAME, PASSWORD, CLUSTER, DATABASE, PORT } = process.env;
 /* Abrir servidor */
 var app = express();
+/* Creamos la URI */
+const URI = `mongodb+srv://${USERNAME}:${PASSWORD}@${CLUSTER}/${DATABASE}`;
 /* Conectar a la BD */
-conectedBD();
+conectedBD(URI);
 /* Para form-encoded */
 app.use(express.urlencoded({ extended: true }));
 /* Para reconocer json */

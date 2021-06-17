@@ -20,7 +20,7 @@ message.post("/", async (req, res) => {
   const { user, message } = req.body;
   try {
     const fullMsg = await controller.addMessage({ user, message });
-    success({ req, res, data: fullMsg, status: 201 });
+    success({ req, res, data: fullMsg, status: 201, msg: "added" });
   } catch (info) {
     error({ req, res, error: "error", status: 400, info });
   }
@@ -31,7 +31,18 @@ message.patch("/:id", async (req, res) => {
   const { message } = req.body;
   try {
     const newMessage = await controller.updateMessage({ id, message });
-    success({ req, res, data: newMessage, status: 200 });
+    success({ req, res, data: newMessage, status: 200, msg: "modified" });
+  } catch (info) {
+    error({ req, res, error: "error", status: 400, info });
+  }
+});
+
+message.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    /* No recibimos el objeto de vuelta porque no aporta nada */
+    await controller.deleteMessage({ id });
+    success({ req, res, data: [], status: 200, msg: `deleted` });
   } catch (info) {
     error({ req, res, error: "error", status: 400, info });
   }

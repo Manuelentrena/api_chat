@@ -1,8 +1,9 @@
 import chalk from "chalk";
 
-export const success = ({ req, res, data = {}, status = 200 }) => {
+export const success = ({ req, res, data = {}, status = 200, msg = "" }) => {
   res.status(status).send({
     data,
+    msg,
     status,
   });
 };

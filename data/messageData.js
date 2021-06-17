@@ -22,8 +22,20 @@ async function updateMessage({ id, message }) {
   return newMessage;
 }
 
+async function deleteMessage({ id }) {
+  const foundMessage = await modelMessage.findOne({
+    _id: id,
+  });
+  if (foundMessage === null) return null;
+  const deleteMessage = await modelMessage.deleteOne({
+    _id: id,
+  });
+  return deleteMessage;
+}
+
 export default {
   add: addMessage,
   list: getMessages,
   update: updateMessage,
+  delete: deleteMessage,
 };
