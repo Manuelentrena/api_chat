@@ -1,11 +1,15 @@
 import DB from "mongoose";
 import chalk from "chalk";
+import dotenv from "dotenv";
+
+//path de las variables de entorno
+dotenv.config({ path: "variables.env" });
+
+const { USERNAME, PASSWORD, CLUSTER, DATABASE } = process.env;
 
 export default function conectedBD() {
   DB.Promise = global.Promise; //que mongoose use Promises ES6
-  const URI =
-    "mongodb+srv://db_user:yvwZNlSWrqFR0jJu@cluster0.zfv5o.mongodb.net/CHAT";
-  /* Conectar con la BD */
+  const URI = `mongodb+srv://${USERNAME}:${PASSWORD}@${CLUSTER}/${DATABASE}`;
   DB.connect(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
