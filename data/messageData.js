@@ -2,12 +2,19 @@ import modelMessage from "../models/messageModel.js";
 
 function addMessage(fullMessage) {
   const fullMessageWithModel = new modelMessage(fullMessage);
-  fullMessageWithModel.save();
+  return fullMessageWithModel.save();
 }
 
 async function getMessages(filter) {
-  const messages = await modelMessage.find(filter);
-  return messages;
+  return new Promise((resolve, reject) => {
+    modelMessage
+      .find(filter)
+      .populate("user")
+      .exec((error, populated) => {
+        if (error) return reject(error);
+        return resolve(populated);
+      });
+  });
 }
 
 async function updateMessage({ id, message }) {

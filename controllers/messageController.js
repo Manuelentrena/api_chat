@@ -1,13 +1,35 @@
 import messageData from "../data/messageData.js";
+import validatedUser from "../helpers/validatedUser.js";
+import validatedSala from "../helpers/validatedSala.js";
+import validatedUserInSala from "../helpers/validatedUserInSala.js";
 
-function addMessage({ user, message }) {
+function addMessage({ user, message, sala }) {
   return new Promise((resolve, reject) => {
-    if (!user || !message) {
+    /* Creamos el mensaje */
+    const fullMessage = {
+      sala,
+      user,
+      message,
+      date: new Date().toLocaleString(),
+    };
+
+    if (!user || !message || !sala) {
       return reject("Somethig data empthy in addMessage");
     }
-    const fullMessage = { user, message, date: new Date().toLocaleString() };
-    messageData.add(fullMessage);
-    return resolve(fullMessage);
+
+    const validations = [];
+
+    validations.push(validatedUser(user));
+    validations.push(validatedSala(sala));
+    validations.push(validatedUserInSala(user, sala));
+
+    Promise.all(validations)
+      .then((values) => {
+        values.includes(false)
+          ? reject("Message hasn't been validated")
+          : resolve(messageData.add(fullMessage));
+      })
+      .catch((error) => reject(error));
   });
 }
 

@@ -9,7 +9,7 @@ message.get("/", async (req, res) => {
   try {
     const list = await controller.getMessages(filter);
     Object.keys(list).length === 0
-      ? success({ req, res, data: list, status: 200 })
+      ? success({ req, res, data: list, status: 200, msg: "without result" })
       : success({ req, res, data: list, status: 201 });
   } catch (info) {
     error({ req, res, error: "error", status: 500, info });
@@ -17,9 +17,9 @@ message.get("/", async (req, res) => {
 });
 
 message.post("/", async (req, res) => {
-  const { user, message } = req.body;
+  const { user, message, sala } = req.body;
   try {
-    const fullMsg = await controller.addMessage({ user, message });
+    const fullMsg = await controller.addMessage({ user, message, sala });
     success({ req, res, data: fullMsg, status: 201, msg: "added" });
   } catch (info) {
     error({ req, res, error: "error", status: 400, info });
