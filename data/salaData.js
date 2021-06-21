@@ -1,4 +1,4 @@
-import salaModel from "../models/salaModel.js";
+const salaModel = require("../models/salaModel");
 
 async function createSala(users) {
   const sala = { users };
@@ -21,7 +21,7 @@ async function listSalas(userId) {
   });
 }
 
-export default {
+module.exports = {
   create: createSala,
   list: listSalas,
 };

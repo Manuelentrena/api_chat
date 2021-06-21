@@ -1,6 +1,6 @@
-import express from "express";
-import { error, success } from "../connection/responses.js";
-import controller from "../controllers/userController.js";
+const express = require("express");
+const { error, success } = require("../connection/responses");
+const controller = require("../controllers/userController");
 
 const user = express.Router();
 
@@ -26,4 +26,4 @@ user.post("/", async (req, res) => {
   }
 });
 
-export default user;
+module.exports = user;

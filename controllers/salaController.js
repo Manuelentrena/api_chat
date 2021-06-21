@@ -1,6 +1,6 @@
-import salaData from "../data/salaData.js";
-import validatedUsers from "../helpers/validatedUsers.js";
-import validatedUser from "../helpers/validatedUser.js";
+const salaData = require("../data/salaData");
+const validatedUsers = require("../helpers/validatedUsers");
+const validatedUser = require("../helpers/validatedUser");
 
 function createSala({ users }) {
   return new Promise(async (resolve, reject) => {
@@ -44,4 +44,4 @@ function listSalasOfUser({ userId }) {
   });
 }
 
-export default { createSala, listSalasOfUser };
+module.exports = { createSala, listSalasOfUser };

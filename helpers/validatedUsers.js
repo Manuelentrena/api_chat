@@ -1,6 +1,7 @@
-import userModel from "../models/userModel.js";
+const userModel = require("../models/userModel");
+const validatedUser = require("./validatedUser");
 /* Verificamos algun usuario no existe en la BD, devolvemos false en ese caso */
-export default async function validatedUsers(users) {
+async function validatedUsers(users) {
   return new Promise(async (resolve, reject) => {
     const usersPromises = users.map((user) => {
       return userModel.exists({ _id: user });
@@ -12,3 +13,5 @@ export default async function validatedUsers(users) {
       .catch((error) => reject(error));
   });
 }
+
+module.exports = validatedUsers;

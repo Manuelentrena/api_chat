@@ -1,4 +1,4 @@
-import userData from "../data/userData.js";
+const userData = require("../data/userData");
 
 function addUser({ name }) {
   return new Promise((resolve, reject) => {
@@ -21,4 +21,4 @@ function getUsers({ name = null }) {
   });
 }
 
-export default { addUser, getUsers };
+module.exports = { addUser, getUsers };

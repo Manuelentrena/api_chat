@@ -1,6 +1,8 @@
-import salaModel from "../models/salaModel.js";
+const salaModel = require("../models/salaModel");
 
-export default function validatedUserInSala(userID, salaID) {
+function validatedUserInSala(userID, salaID) {
   const filter = { _id: salaID, users: userID };
   return salaModel.exists(filter);
 }
+
+module.exports = validatedUserInSala;

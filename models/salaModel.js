@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
@@ -7,4 +7,4 @@ const salaSchema = new Schema({
 });
 
 const salaModel = mongoose.model("chat_sala", salaSchema);
-export default salaModel;
+module.exports = salaModel;

@@ -1,4 +1,4 @@
-import modelMessage from "../models/messageModel.js";
+const modelMessage = require("../models/messageModel");
 
 function addMessage(fullMessage) {
   const fullMessageWithModel = new modelMessage(fullMessage);
@@ -40,7 +40,7 @@ async function deleteMessage({ id }) {
   return deleteMessage;
 }
 
-export default {
+module.exports = {
   add: addMessage,
   list: getMessages,
   update: updateMessage,

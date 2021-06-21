@@ -1,8 +1,22 @@
-import express from "express";
-import { error, success } from "../connection/responses.js";
-import controller from "../controllers/messageController.js";
+const express = require("express");
+const multer = require("multer");
+const { error, success } = require("../connection/responses");
+const controller = require("../controllers/messageController");
 
 const message = express.Router();
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    const [name, extension] = file.originalname.split(".");
+    console.log(file.originalname);
+    cb(null, `${name}-${Date.now()}.${extension}`);
+  },
+});
+
+let upload = multer({ storage: storage });
 
 message.get("/", async (req, res) => {
   const filter = req.query;
@@ -16,14 +30,16 @@ message.get("/", async (req, res) => {
   }
 });
 
-message.post("/", async (req, res) => {
-  const { user, message, sala } = req.body;
-  try {
+message.post("/", upload.single("file"), async (req, res) => {
+  /* const { message } = req.body.data; */
+  console.log("ver file" + req.file);
+  res.send("Exito");
+  /* try {
     const fullMsg = await controller.addMessage({ user, message, sala });
     success({ req, res, data: fullMsg, status: 201, msg: "added" });
   } catch (info) {
     error({ req, res, error: "error", status: 400, info });
-  }
+  } */
 });
 
 message.patch("/:id", async (req, res) => {
@@ -48,4 +64,4 @@ message.delete("/:id", async (req, res) => {
   }
 });
 
-export default message;
+module.exports = message;

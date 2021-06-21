@@ -1,5 +1,7 @@
-import userModel from "../models/userModel.js";
+const userModel = require("../models/userModel");
 /* Verificamos si existe el user en la BD */
-export default function validatedUser(userId) {
+function validatedUser(userId) {
   return userModel.exists({ _id: userId });
 }
+
+module.exports = validatedUser;

@@ -1,8 +1,8 @@
-import express from "express";
-import { router } from "./connection/routers.js";
-import conectedBD from "./config/db.js";
-import chalk from "chalk";
-import dotenv from "dotenv";
+const express = require("express");
+const router = require("./connection/routers");
+const conectedBD = require("./config/db");
+const chalk = require("chalk");
+const dotenv = require("dotenv");
 
 //path de las variables de entorno
 dotenv.config({ path: "variables.env" });

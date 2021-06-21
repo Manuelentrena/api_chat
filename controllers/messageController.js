@@ -1,7 +1,7 @@
-import messageData from "../data/messageData.js";
-import validatedUser from "../helpers/validatedUser.js";
-import validatedSala from "../helpers/validatedSala.js";
-import validatedUserInSala from "../helpers/validatedUserInSala.js";
+const messageData = require("../data/messageData");
+const validatedUser = require("../helpers/validatedUser");
+const validatedSala = require("../helpers/validatedSala");
+const validatedUserInSala = require("../helpers/validatedUserInSala");
 
 function addMessage({ user, message, sala }) {
   return new Promise((resolve, reject) => {
@@ -66,4 +66,4 @@ function deleteMessage({ id }) {
   });
 }
 
-export default { addMessage, getMessages, updateMessage, deleteMessage };
+module.exports = { addMessage, getMessages, updateMessage, deleteMessage };

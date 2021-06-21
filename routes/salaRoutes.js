@@ -1,6 +1,6 @@
-import express from "express";
-import { error, success } from "../connection/responses.js";
-import controller from "../controllers/salaController.js";
+const express = require("express");
+const { error, success } = require("../connection/responses");
+const controller = require("../controllers/salaController");
 
 const sala = express.Router();
 
@@ -24,4 +24,4 @@ sala.post("/", async (req, res) => {
   }
 });
 
-export default sala;
+module.exports = sala;

@@ -1,4 +1,4 @@
-import userModel from "../models/userModel.js";
+const userModel = require("../models/userModel");
 
 async function addUser({ user }) {
   const myUser = new userModel(user);
@@ -10,7 +10,7 @@ async function getUsers(filter) {
   return users;
 }
 
-export default {
+module.exports = {
   add: addUser,
   list: getUsers,
 };

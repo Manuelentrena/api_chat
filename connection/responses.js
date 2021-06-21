@@ -1,6 +1,6 @@
-import chalk from "chalk";
+const chalk = require("chalk");
 
-export const success = ({ req, res, data = {}, status = 200, msg = "" }) => {
+exports.success = ({ req, res, data = {}, status = 200, msg = "" }) => {
   res.status(status).send({
     data,
     msg,
@@ -8,7 +8,7 @@ export const success = ({ req, res, data = {}, status = 200, msg = "" }) => {
   });
 };
 
-export const error = ({ req, res, error = "error", status = 400, info }) => {
+exports.error = ({ req, res, error = "error", status = 400, info }) => {
   console.error(chalk.red(info));
   res.status(status).send({
     error,
