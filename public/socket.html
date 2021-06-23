@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API CHAT</title>
+  </head>
+  <body>
+    <h1>Bienvenido a la API CHAT</h1>
+    <h2>Creado Por @Manuel_Entrena</h2>
+    <div id="root"></div>
+    <script defer>
+      const socket = io.connect("http://localhost:3000", {
+        forceNew: true,
+      });
+
+      socket.on("message", (data) => {
+        const root = document.querySelector("#root");
+        const container = document.createElement("div");
+        const img = document.createElement("img");
+        img.src = `${data.fileURL}`;
+        img.alt = `${data.fileURL}`;
+        const parrafo = document.createElement("p");
+        const texto = document.createTextNode(`${data.message}`);
+        parrafo.appendChild(texto);
+        container.appendChild(img);
+        container.appendChild(parrafo);
+        root.appendChild(container);
+      });
+    </script>
+  </body>
+</html>

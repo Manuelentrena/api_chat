@@ -9,6 +9,7 @@ const messageSchema = new Schema({
     required: true,
   },
   date: Date,
+  fileURL: String,
 });
 
 const modelMessage = mongoose.model("chat_messages", messageSchema);

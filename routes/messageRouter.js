@@ -7,12 +7,11 @@ const message = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./uploads");
+    cb(null, "./public/images");
   },
   filename: function (req, file, cb) {
-    const [name, extension] = file.originalname.split(".");
-    console.log(file.originalname);
-    cb(null, `${name}-${Date.now()}.${extension}`);
+    const parts = file.originalname.split(".");
+    cb(null, `${parts[0]}-${Date.now()}.${parts[parts.length - 1]}`);
   },
 });
 
@@ -31,15 +30,14 @@ message.get("/", async (req, res) => {
 });
 
 message.post("/", upload.single("file"), async (req, res) => {
-  /* const { message } = req.body.data; */
-  console.log("ver file" + req.file);
-  res.send("Exito");
-  /* try {
-    const fullMsg = await controller.addMessage({ user, message, sala });
+  const { user, message, sala } = req.body;
+  const file = req.file;
+  try {
+    const fullMsg = await controller.addMessage({ user, message, sala, file });
     success({ req, res, data: fullMsg, status: 201, msg: "added" });
   } catch (info) {
     error({ req, res, error: "error", status: 400, info });
-  } */
+  }
 });
 
 message.patch("/:id", async (req, res) => {

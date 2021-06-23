@@ -2,15 +2,23 @@ const messageData = require("../data/messageData");
 const validatedUser = require("../helpers/validatedUser");
 const validatedSala = require("../helpers/validatedSala");
 const validatedUserInSala = require("../helpers/validatedUserInSala");
+const { socket } = require("../socket");
 
-function addMessage({ user, message, sala }) {
+function addMessage({ user, message, sala, file }) {
   return new Promise((resolve, reject) => {
+    /* Para la img */
+    let fileURL = "";
+    const { URL } = process.env;
+    if (file) {
+      fileURL = `${URL}/images/${file.filename}`;
+    }
     /* Creamos el mensaje */
     const fullMessage = {
       sala,
       user,
       message,
       date: new Date().toLocaleString(),
+      fileURL,
     };
 
     if (!user || !message || !sala) {
@@ -25,9 +33,14 @@ function addMessage({ user, message, sala }) {
 
     Promise.all(validations)
       .then((values) => {
-        values.includes(false)
-          ? reject("Message hasn't been validated")
-          : resolve(messageData.add(fullMessage));
+        if (values.includes(false)) {
+          reject("Message hasn't been validated");
+        } else {
+          const resMsg = messageData.add(fullMessage);
+          console.log(fullMessage);
+          socket.io.emit("message", fullMessage);
+          resolve(resMsg);
+        }
       })
       .catch((error) => reject(error));
   });
